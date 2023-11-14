@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text Translation for CPD-AI Demo</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/index.css')}}"/>
+    <main>
+        <section>
+            <h1>Speech-to-Text Transcription</h1>
+            <p>Develop a Speech-to-Text Transcription tool on audio file uploads with Python und Flask using the Speech recognition module and Whisper model.</p>
+        </section>
+    </main>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div id="speechContainer">
+        <h2>  Upload a new audio file</h2>
+        <form method="post" enctype="multipart/form-data">
+            |<input type="file" name="file"/>
+            |<br>
+            |<input type="submit" id="submitButton" value="Transcribe"/>
+        </form>
+        {% if transcript != "" %}
+        <div id="speechTranscriptContainer">
+            <h1>  Transcription of the audio file  </h1>
+            <p id="speechText">{{transcript}}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <h2>Audio player to listen to transcription</h2>
+    
+    <!-- Input element for choosing an audio file -->
+    <input type="file" accept="audio/*" id="audio-file" onchange="playSelectedAudio()">
+
+    <!-- Audio player element to display the selected audio -->
+    <audio controls id="audio-player">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function playSelectedAudio() {
+            const audioFileInput = document.getElementById('audio-file');
+            const audioPlayer = document.getElementById('audio-player');
+
+            if (audioFileInput.files.length > 0) {
+                const selectedAudio = audioFileInput.files[0];
+                const objectURL = URL.createObjectURL(selectedAudio);
+                audioPlayer.src = objectURL;
+                audioPlayer.load();
+                audioPlayer.play();
+            }
+        }
+    </script>
+          
+    
+</body>
+
+</html>
+
